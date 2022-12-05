@@ -1,0 +1,1437 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Manage your SLOs & Metrics",
+    "title": "OMA Tool API",
+    "contact": {
+      "name": "OMA Team",
+      "x-teams": "https://teams.microsoft.com/l/channel/19%3a9dcdba3b28144dd99339b438a4fb6041%40thread.skype/DXSupport_OMA?groupId=5db0b21c-0aca-418e-ba3a-14fd04f0fa9a&tenantId=64322308-09a9-47a3-8c1c-b82871d60568",
+      "x-slack": "#error_budget_support"
+    },
+    "license": {
+      "name": "​"
+    },
+    "version": "1.0",
+    "x-keywords": "errorbudget oma observe measure anaylze slo utilization",
+    "x-related-masterdata": "slo, vertical",
+    "x-activated-countries": [
+      "ALL"
+    ],
+    "x-solution": "OMA",
+    "x-scope": "metro"
+  },
+  "host": "oma.metro.digital",
+  "basePath": "/ebt/v1",
+  "paths": {
+    "/datasource/{id}": {
+      "get": {
+        "description": "Returns Datasource",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "datasources"
+        ],
+        "summary": "Get Datasource",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Datasource ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/grafana.Datasource"
+            }
+          }
+        }
+      }
+    },
+    "/feedback/": {
+      "post": {
+        "description": "Returns Feedback",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Create Feedback",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Feedback",
+            "name": "feedback",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.Feedback"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/feedback/{id}": {
+      "get": {
+        "description": "Returns Feedback",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Get Feedback",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Org ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/happiness_metric/": {
+      "post": {
+        "description": "Returns Happiness Metric",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Create Happiness Metric",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Happiness Metric",
+            "name": "happinessMetric",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.HappinessMetric"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/happiness_metric/{id}": {
+      "get": {
+        "description": "Returns Happiness Metric",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Get Happiness Metric",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Happiness Metric ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Updates Happiness Metric",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Update Happiness Metric",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Happiness Metric ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Happiness Metric",
+            "name": "happinessMetric",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.HappinessMetric"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes Happiness Metric",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Delete Happiness Metric",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Happiness Metric ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/org/{id}": {
+      "get": {
+        "description": "Returns organization details",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Get Organization",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/grafana.Organization"
+            }
+          }
+        }
+      }
+    },
+    "/org/{id}/datasource": {
+      "get": {
+        "description": "Returns all datasources for Organization",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Get Datasources",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/grafana.Datasource"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/org/{id}/slo": {
+      "get": {
+        "description": "Returns all SLOs for Organization",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Get SLOs",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.Slo"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Returns all SLOs for Organization matching filter params",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Get filtered SLOs",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Slo Query Params",
+            "name": "sloQueryParams",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.SloQueryParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.Slo"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/org/{id}/team_happiness": {
+      "get": {
+        "description": "Returns array of happiness metrics",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Get all happiness metrics created by a team, filtered by orgId",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.HappinessMetric"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/org/{id}/team_happiness/average": {
+      "post": {
+        "description": "Store team's happiness metric average",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Store team's happiness metric average",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/org/{id}/team_happiness/missing": {
+      "get": {
+        "description": "Returns array of users' names",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Get users whose input is missing for a current period",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.UserMissingInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/org/{id}/user_happiness": {
+      "get": {
+        "description": "Returns array of happiness metrics",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "happiness metrics"
+        ],
+        "summary": "Get all happiness metrics created by a user, filtered by orgId",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.HappinessMetric"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plugin/{id}": {
+      "post": {
+        "description": "Enables and Initialize OMA Plugin for given Organization",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "plugin"
+        ],
+        "summary": "Enable OMA Plugin",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Organization ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "skip DS creation, default false",
+            "name": "skipds",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/products_status": {
+      "get": {
+        "description": "Returns all products status",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "fs"
+        ],
+        "summary": "Get Products Status",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/recommendation_vote": {
+      "get": {
+        "description": "Returns array of Recommendation Votes",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "vote"
+        ],
+        "summary": "Get Recommendation Votes for current user",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "filter by organization name",
+            "name": "orgID",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.RecommendationVote"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Returns Vote ID",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "vote"
+        ],
+        "summary": "Create Recommendation Vote",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "RecommendationVote",
+            "name": "vote",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.RecommendationVote"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Returns Vote ID",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "vote"
+        ],
+        "summary": "Delete Recommendation Vote",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "RecommendationVote",
+            "name": "vote",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.RecommendationVote"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/sda": {
+      "get": {
+        "description": "Returns full SDA configuration for all organizations",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "sda"
+        ],
+        "summary": "Get SDA configuration",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/slo": {
+      "get": {
+        "description": "Returns array of SLOs",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slos"
+        ],
+        "summary": "Get detailed and filtered SLOs visible to user",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "filter by SLO name",
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "filter by organization name",
+            "name": "orgName",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.DetailedSlo"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates SLO",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slos"
+        ],
+        "summary": "Add SLO",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "neither id nor creation_date is checked",
+            "name": "slo",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.Slo"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      }
+    },
+    "/slo/{id}": {
+      "get": {
+        "description": "Returns SLO",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slos"
+        ],
+        "summary": "Get SLO",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Slo ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/model.Slo"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Updates SLO",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slos"
+        ],
+        "summary": "Update SLO",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Slo ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "SLO",
+            "name": "slo",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/model.Slo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.ID"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes SLO",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slos"
+        ],
+        "summary": "Delete SLO",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Slo ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/model.Slo"
+            }
+          }
+        }
+      }
+    },
+    "/slo/{id}/history": {
+      "delete": {
+        "description": "Deletes SLO History",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slos"
+        ],
+        "summary": "Delete SLO History",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Slo ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/model.Slo"
+            }
+          }
+        }
+      }
+    },
+    "/solutionSlo": {
+      "get": {
+        "description": "Returns attributes of Solution SLO",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "solutionslo"
+        ],
+        "summary": "Get Solution SLO details of org",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "filter by organization name",
+            "name": "orgName",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/model.SolutionSlo"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solutions": {
+      "get": {
+        "description": "Returns all solutions with products",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "fs"
+        ],
+        "summary": "Get Solutions",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Bearer token | Basic auth | Cookie grafana_session",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "provide a list with products, default false",
+            "name": "long",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "filter by solution scope, default no filter, scope types: \\",
+            "name": "solutionScope",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "provide a list with products which allow share devops metrics, default false",
+            "name": "allowedOnly",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "api.ID": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "grafana.Datasource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "grafana.Organization": {
+      "type": "object",
+      "properties": {
+        "featured": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "productName": {
+          "type": "string"
+        },
+        "solutionId": {
+          "type": "string"
+        },
+        "solutionName": {
+          "type": "string"
+        }
+      }
+    },
+    "model.DetailedSlo": {
+      "type": "object",
+      "required": [
+        "complianceExpAvailability",
+        "name",
+        "orgId",
+        "successRateExpAvailability"
+      ],
+      "properties": {
+        "autogen": {
+          "type": "boolean"
+        },
+        "complianceExpAvailability": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string"
+        },
+        "critical": {
+          "type": "boolean"
+        },
+        "datasourceId": {
+          "type": "integer"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "externalSla": {
+          "type": "string"
+        },
+        "externalType": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "orgId": {
+          "type": "integer"
+        },
+        "orgName": {
+          "type": "string"
+        },
+        "solutionId": {
+          "type": "integer"
+        },
+        "successRateExpAvailability": {
+          "type": "string"
+        }
+      }
+    },
+    "model.Feedback": {
+      "type": "object",
+      "required": [
+        "feedbackDate",
+        "givingUserId",
+        "orgId",
+        "receivingUserId"
+      ],
+      "properties": {
+        "feedbackDate": {
+          "type": "string"
+        },
+        "givingUserId": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "orgId": {
+          "type": "integer"
+        },
+        "receivingUserId": {
+          "type": "integer"
+        }
+      }
+    },
+    "model.HappinessMetric": {
+      "type": "object",
+      "required": [
+        "date",
+        "happiness",
+        "orgId",
+        "safety"
+      ],
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "happiness": {
+          "type": "number"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "orgId": {
+          "type": "integer"
+        },
+        "safety": {
+          "type": "number"
+        },
+        "safetyOutlier": {
+          "type": "integer"
+        },
+        "userId": {
+          "type": "integer"
+        }
+      }
+    },
+    "model.RecommendationVote": {
+      "type": "object",
+      "required": [
+        "orgId",
+        "recommendationType",
+        "vote"
+      ],
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "orgId": {
+          "type": "integer"
+        },
+        "recommendationType": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "integer"
+        },
+        "vote": {
+          "type": "string"
+        }
+      }
+    },
+    "model.Slo": {
+      "type": "object",
+      "required": [
+        "complianceExpAvailability",
+        "name",
+        "orgId",
+        "successRateExpAvailability"
+      ],
+      "properties": {
+        "autogen": {
+          "type": "boolean"
+        },
+        "complianceExpAvailability": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string"
+        },
+        "critical": {
+          "type": "boolean"
+        },
+        "datasourceId": {
+          "type": "integer"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "externalSla": {
+          "type": "string"
+        },
+        "externalType": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "orgId": {
+          "type": "integer"
+        },
+        "successRateExpAvailability": {
+          "type": "string"
+        }
+      }
+    },
+    "model.SloQueryParams": {
+      "type": "object",
+      "properties": {
+        "datasourceType": {
+          "type": "string"
+        },
+        "metricType": {
+          "type": "string"
+        }
+      }
+    },
+    "model.SolutionSlo": {
+      "type": "object",
+      "properties": {
+        "dashboardPath": {
+          "type": "string"
+        },
+        "noCriticalSLOs": {
+          "type": "integer"
+        },
+        "orgId": {
+          "type": "integer"
+        }
+      }
+    },
+    "model.UserMissingInput": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "IDAM": [
+        "user_type:EMP"
+      ]
+    },
+    {
+      "BasicAuth": []
+    }
+  ]
+}

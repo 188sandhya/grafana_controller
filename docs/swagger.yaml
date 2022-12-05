@@ -1,0 +1,954 @@
+basePath: /ebt/v1
+definitions:
+  api.ID:
+    properties:
+      id:
+        type: integer
+    type: object
+  grafana.Datasource:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: string
+      url:
+        type: string
+    type: object
+  grafana.Organization:
+    properties:
+      featured:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      productId:
+        type: string
+      productName:
+        type: string
+      solutionId:
+        type: string
+      solutionName:
+        type: string
+    type: object
+  model.DetailedSlo:
+    properties:
+      autogen:
+        type: boolean
+      complianceExpAvailability:
+        type: string
+      creationDate:
+        type: string
+      critical:
+        type: boolean
+      datasourceId:
+        type: integer
+      externalId:
+        type: string
+      externalSla:
+        type: string
+      externalType:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      orgId:
+        type: integer
+      orgName:
+        type: string
+      solutionId:
+        type: integer
+      successRateExpAvailability:
+        type: string
+    required:
+    - complianceExpAvailability
+    - name
+    - orgId
+    - successRateExpAvailability
+    type: object
+  model.Feedback:
+    properties:
+      feedbackDate:
+        type: string
+      givingUserId:
+        type: integer
+      id:
+        type: integer
+      orgId:
+        type: integer
+      receivingUserId:
+        type: integer
+    required:
+    - feedbackDate
+    - givingUserId
+    - orgId
+    - receivingUserId
+    type: object
+  model.HappinessMetric:
+    properties:
+      date:
+        type: string
+      enabled:
+        type: boolean
+      happiness:
+        type: number
+      id:
+        type: integer
+      orgId:
+        type: integer
+      safety:
+        type: number
+      safetyOutlier:
+        type: integer
+      userId:
+        type: integer
+    required:
+    - date
+    - happiness
+    - orgId
+    - safety
+    type: object
+  model.RecommendationVote:
+    properties:
+      date:
+        type: string
+      id:
+        type: integer
+      orgId:
+        type: integer
+      recommendationType:
+        type: string
+      userId:
+        type: integer
+      vote:
+        type: string
+    required:
+    - orgId
+    - recommendationType
+    - vote
+    type: object
+  model.Slo:
+    properties:
+      autogen:
+        type: boolean
+      complianceExpAvailability:
+        type: string
+      creationDate:
+        type: string
+      critical:
+        type: boolean
+      datasourceId:
+        type: integer
+      externalId:
+        type: string
+      externalSla:
+        type: string
+      externalType:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      orgId:
+        type: integer
+      successRateExpAvailability:
+        type: string
+    required:
+    - complianceExpAvailability
+    - name
+    - orgId
+    - successRateExpAvailability
+    type: object
+  model.SloQueryParams:
+    properties:
+      datasourceType:
+        type: string
+      metricType:
+        type: string
+    type: object
+  model.SolutionSlo:
+    properties:
+      dashboardPath:
+        type: string
+      noCriticalSLOs:
+        type: integer
+      orgId:
+        type: integer
+    type: object
+  model.UserMissingInput:
+    properties:
+      login:
+        type: string
+      userId:
+        type: integer
+    type: object
+host: oma.metro.digital
+info:
+  contact:
+    name: OMA Team
+  description: Manage your SLOs & Metrics
+  license:
+    name: ​
+  title: OMA Tool API
+  version: "1.0"
+paths:
+  /datasource/{id}:
+    get:
+      description: Returns Datasource
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Datasource ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/grafana.Datasource'
+      summary: Get Datasource
+      tags:
+      - datasources
+  /feedback/:
+    post:
+      consumes:
+      - application/json
+      description: Returns Feedback
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Feedback
+        in: body
+        name: feedback
+        required: true
+        schema:
+          $ref: '#/definitions/model.Feedback'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Create Feedback
+      tags:
+      - feedback
+  /feedback/{id}:
+    get:
+      description: Returns Feedback
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Org ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Get Feedback
+      tags:
+      - feedback
+  /happiness_metric/:
+    post:
+      consumes:
+      - application/json
+      description: Returns Happiness Metric
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Happiness Metric
+        in: body
+        name: happinessMetric
+        required: true
+        schema:
+          $ref: '#/definitions/model.HappinessMetric'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Create Happiness Metric
+      tags:
+      - happiness metrics
+  /happiness_metric/{id}:
+    delete:
+      description: Deletes Happiness Metric
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Happiness Metric ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Delete Happiness Metric
+      tags:
+      - happiness metrics
+    get:
+      description: Returns Happiness Metric
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Happiness Metric ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Get Happiness Metric
+      tags:
+      - happiness metrics
+    put:
+      consumes:
+      - application/json
+      description: Updates Happiness Metric
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Happiness Metric ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Happiness Metric
+        in: body
+        name: happinessMetric
+        required: true
+        schema:
+          $ref: '#/definitions/model.HappinessMetric'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Update Happiness Metric
+      tags:
+      - happiness metrics
+  /org/{id}:
+    get:
+      description: Returns organization details
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/grafana.Organization'
+      summary: Get Organization
+      tags:
+      - organizations
+  /org/{id}/datasource:
+    get:
+      description: Returns all datasources for Organization
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/grafana.Datasource'
+            type: array
+      summary: Get Datasources
+      tags:
+      - organizations
+  /org/{id}/slo:
+    get:
+      description: Returns all SLOs for Organization
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Slo'
+            type: array
+      summary: Get SLOs
+      tags:
+      - organizations
+    post:
+      description: Returns all SLOs for Organization matching filter params
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Slo Query Params
+        in: body
+        name: sloQueryParams
+        required: true
+        schema:
+          $ref: '#/definitions/model.SloQueryParams'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Slo'
+            type: array
+      summary: Get filtered SLOs
+      tags:
+      - organizations
+  /org/{id}/team_happiness:
+    get:
+      description: Returns array of happiness metrics
+      parameters:
+      - description: Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.HappinessMetric'
+            type: array
+      summary: Get all happiness metrics created by a team, filtered by orgId
+      tags:
+      - happiness metrics
+  /org/{id}/team_happiness/average:
+    post:
+      description: Store team's happiness metric average
+      parameters:
+      - description: Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Store team's happiness metric average
+      tags:
+      - happiness metrics
+  /org/{id}/team_happiness/missing:
+    get:
+      description: Returns array of users' names
+      parameters:
+      - description: Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.UserMissingInput'
+            type: array
+      summary: Get users whose input is missing for a current period
+      tags:
+      - happiness metrics
+  /org/{id}/user_happiness:
+    get:
+      description: Returns array of happiness metrics
+      parameters:
+      - description: Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.HappinessMetric'
+            type: array
+      summary: Get all happiness metrics created by a user, filtered by orgId
+      tags:
+      - happiness metrics
+  /plugin/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Enables and Initialize OMA Plugin for given Organization
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Organization ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: skip DS creation, default false
+        in: query
+        name: skipds
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Enable OMA Plugin
+      tags:
+      - plugin
+  /products_status:
+    get:
+      description: Returns all products status
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Products Status
+      tags:
+      - fs
+  /recommendation_vote:
+    delete:
+      consumes:
+      - application/json
+      description: Returns Vote ID
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: RecommendationVote
+        in: body
+        name: vote
+        required: true
+        schema:
+          $ref: '#/definitions/model.RecommendationVote'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Delete Recommendation Vote
+      tags:
+      - vote
+    get:
+      description: Returns array of Recommendation Votes
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: filter by organization name
+        in: query
+        name: orgID
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.RecommendationVote'
+            type: array
+      summary: Get Recommendation Votes for current user
+      tags:
+      - vote
+    post:
+      consumes:
+      - application/json
+      description: Returns Vote ID
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: RecommendationVote
+        in: body
+        name: vote
+        required: true
+        schema:
+          $ref: '#/definitions/model.RecommendationVote'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Create Recommendation Vote
+      tags:
+      - vote
+  /sda:
+    get:
+      description: Returns full SDA configuration for all organizations
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get SDA configuration
+      tags:
+      - sda
+  /slo:
+    get:
+      description: Returns array of SLOs
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: filter by SLO name
+        in: query
+        name: name
+        type: string
+      - description: filter by organization name
+        in: query
+        name: orgName
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.DetailedSlo'
+            type: array
+      summary: Get detailed and filtered SLOs visible to user
+      tags:
+      - slos
+    post:
+      consumes:
+      - application/json
+      description: Creates SLO
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: neither id nor creation_date is checked
+        in: body
+        name: slo
+        required: true
+        schema:
+          $ref: '#/definitions/model.Slo'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Add SLO
+      tags:
+      - slos
+  /slo/{id}:
+    delete:
+      description: Deletes SLO
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Slo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Slo'
+      summary: Delete SLO
+      tags:
+      - slos
+    get:
+      description: Returns SLO
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Slo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Slo'
+      summary: Get SLO
+      tags:
+      - slos
+    put:
+      consumes:
+      - application/json
+      description: Updates SLO
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Slo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: SLO
+        in: body
+        name: slo
+        required: true
+        schema:
+          $ref: '#/definitions/model.Slo'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ID'
+      summary: Update SLO
+      tags:
+      - slos
+  /slo/{id}/history:
+    delete:
+      description: Deletes SLO History
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Slo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Slo'
+      summary: Delete SLO History
+      tags:
+      - slos
+  /solutionSlo:
+    get:
+      description: Returns attributes of Solution SLO
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: filter by organization name
+        in: query
+        name: orgName
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.SolutionSlo'
+            type: array
+      summary: Get Solution SLO details of org
+      tags:
+      - solutionslo
+  /solutions:
+    get:
+      description: Returns all solutions with products
+      parameters:
+      - description: Bearer token | Basic auth | Cookie grafana_session
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: provide a list with products, default false
+        in: query
+        name: long
+        type: string
+      - description: 'filter by solution scope, default no filter, scope types: \'
+        in: query
+        name: solutionScope
+        type: string
+      - description: provide a list with products which allow share devops metrics,
+          default false
+        in: query
+        name: allowedOnly
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Solutions
+      tags:
+      - fs
+swagger: "2.0"
