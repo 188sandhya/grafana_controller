@@ -1,0 +1,5 @@
+
+GO_BIN=GO111MODULE=on go
+
+GINKGO_BIN=GO111MODULE=on ginkgo
+GINKGO_FLAGS=-tags unitTests -randomizeAllSpecs

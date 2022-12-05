@@ -1,0 +1,100 @@
+version: "3.5"
+services:
+  executor:
+    image: registry.metroscales.io/errorbudget/blueprints:dredd-with-wait-for-host
+    container_name: dredd-grafana-controller
+    volumes:
+      - "./integration-test/blueprints/grafana-controller:/blueprints"
+    command:
+      - http://grafana-controller:8000
+    depends_on:
+      - grafana-controller
+    networks:
+      eb2net:
+
+  init-cruiser:
+    image: ${INIT_CRUISER_IMAGE:-eb2/eb-initcruiser:latest}
+    container_name: eb-initcruiser
+    environment:
+      GRAFANA_URL: http://grafana:3000
+      POSTGRES_URL: postgres://postgres:example@postgres:5432/grafana?sslmode=disable
+      INIT_GRAFANA_4_CDC: "TRUE"
+    depends_on: 
+      postgres: 
+        condition: service_healthy
+      grafana: 
+        condition: service_started
+    networks:
+      eb2net:
+
+  postgres:
+    image: registry.metroscales.io/errorbudget/postgres:10.6-alpine
+    container_name: oma-playground-postgres
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: grafana
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      timeout: 10s
+      retries: 10
+    networks:
+      eb2net:
+
+  grafana-controller:
+    image: ${GRAFANA_CONTROLLER_IMAGE:-eb2/eb-grafana-controller:latest}
+    container_name: grafana-controller
+    environment:
+      GRAFANA_SECRET: "grafana_secret"
+      SERVICE_DISCOVERY_BASIC_AUTH: "tomcruiser:orkisz100"
+      POSTGRES_URL: postgres://postgres:example@postgres:5432/grafana?sslmode=disable
+      IDAM_BASE_URL: http://oauth:8123
+      GITLAB_BASE_URL: http://gitlab:8124
+      GITHUB_BASE_URL: http://github:8125
+    volumes:
+      - "./integration-test/configs/:/config"
+    depends_on:
+      init-cruiser:
+        condition: service_started
+      postgres: 
+        condition: service_healthy
+      grafana: 
+        condition: service_started
+      elastic:
+        condition: service_started
+      oauth:
+        condition: service_started
+    networks:
+      eb2net:
+
+  grafana:
+    container_name: grafana
+    command: ["-f", "/blueprints/*.md"]
+    entrypoint: ["drakov", "-p", "3000", "--public", "--debugMode"]
+    image: registry.metroscales.io/errorbudget/blueprints:drakov
+    volumes:
+      - "./integration-test/blueprints/grafana:/blueprints"
+    networks:
+      eb2net:
+
+  elastic:
+    container_name: oma-playground-elastic
+    command: ["-f", "/blueprints/*.md"]
+    entrypoint: ["drakov", "-p", "9200", "--public", "--debugMode"]
+    image: registry.metroscales.io/errorbudget/blueprints:drakov
+    volumes:
+      - "./integration-test/blueprints/elastic:/blueprints"
+    networks:
+      eb2net:
+
+  oauth:
+    container_name: oma-playground-oauth
+    command: ["-f", "/blueprints/*.md"]
+    entrypoint: ["drakov", "-p", "8123", "--public", "--debugMode"]
+    image: registry.metroscales.io/errorbudget/blueprints:drakov
+    volumes:
+      - "./integration-test/blueprints/oauth:/blueprints"
+    networks:
+      eb2net:
+
+networks:
+  eb2net:

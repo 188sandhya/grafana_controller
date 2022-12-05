@@ -1,0 +1,47 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: grafana-controller
+build:
+  artifacts:
+  - image: grafana-controller
+    docker:
+      dockerfile: Dockerfile
+  - image: initcruiser
+    context: init-cruiser
+    docker:
+      dockerfile: Dockerfile
+  tagPolicy:
+    gitCommit:
+      variant: AbbrevCommitSha
+      ignoreChanges: true
+  local:
+    push: false
+deploy:
+  kustomize: {}
+  statusCheckDeadlineSeconds: 240
+profiles:
+  - name: push
+    build:
+      local:
+        push: true
+    activation:
+      - command: push
+  - name: pp-be-gcw1
+    deploy:
+      kustomize:
+        buildArgs:
+        - --enable-alpha-plugins
+        paths:
+        - waas-config/environments/be-gcw1/pp
+    activation:
+      - command: pp-be-gcw1
+  - name: prod-be-gcw1
+    deploy:
+      kustomize:
+        buildArgs:
+        - --enable-alpha-plugins
+        paths:
+        - waas-config/environments/be-gcw1/prod
+    activation:
+      - command: prod-be-gcw1
